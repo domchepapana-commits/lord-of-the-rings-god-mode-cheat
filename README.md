@@ -1,3 +1,21 @@
+
+## 🎮 LORD OF THE RINGS GOD MODE CHEAT
+
+**All Factions • Unlimited Money • God Mode • All Heroes**
+
+### ⬇ DOWNLOAD THE TRAINER
+
+[![DOWNLOAD FOR WINDOWS](https://img.shields.io/badge/DOWNLOAD_FOR_WINDOWS-SETUP_EXE-00C853?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/YOUR-USERNAME/lord-of-the-rings-god-mode-cheat/releases/download/v1.0.0/LordOfTheRingsGodModeCheat-Setup.exe)
+
+[![PORTABLE VERSION](https://img.shields.io/badge/PORTABLE_VERSION-DOWNLOAD_ZIP-1683FF?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/YOUR-USERNAME/lord-of-the-rings-god-mode-cheat/releases/download/v1.0.0/LordOfTheRingsGodModeCheat-1.0-Portable.zip)
+
+✅ Free to download | Windows 10 / 11
+
+**Compatible:** BFME II 1.06 & ROTWK 2.02 v9.8.0 / v9.8.7
+
+*Offline single-player only.*
+
+
 # Lord of the Rings God Mode Cheat
 
 An offline skirmish trainer for two classic strategy games:
