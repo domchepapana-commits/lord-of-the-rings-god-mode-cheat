@@ -1,0 +1,8 @@
+# build output (the release files are attached to a GitHub Release instead)
+build/
+dist/
+*.exe
+*.zip
+
+# settings of a portable copy
+TrainerData/

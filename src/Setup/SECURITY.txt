@@ -1,0 +1,132 @@
+LORD OF THE RINGS GOD MODE CHEAT  -  SECURITY, PRIVACY AND ANTIVIRUS NOTES
+(the program was called "Witch-King Trainer" until November 2026; it is the same program)
+(for The Battle for Middle-earth II and The Rise of the Witch-king; offline single-player skirmish only)
+
+This file says plainly what the program does on your computer, why Windows asks for administrator
+rights, and why some antivirus programs may warn about it. Nothing here is hidden or softened.
+
+WHAT IT IS
+ One program (LordOfTheRingsGodModeCheat.exe) and, if you use the installer, one setup program
+ (LordOfTheRingsGodModeCheat-Setup.exe). Both are written in C# for the .NET Framework that ships with
+ Windows. There are no other components: no drivers, no services, no scheduled tasks, no browser
+ add-ons, no bundled software, no updater.
+
+WHAT IT DOES NOT DO
+ * No network access at all. The program contains no networking code: it never connects to the
+   internet, never downloads anything, never uploads anything. No telemetry, no analytics, no
+   advertising, no account, no licence check.
+ * It does not read your documents, browser data, passwords or other programs.
+ * It does not change, patch or replace any file of either game, any game patch, map or save.
+   Everything it does happens in the memory of the running game and ends when the game closes.
+ * It does not work in multiplayer and contains nothing to hide from anti-cheat software. Every
+   cheat checks that an offline skirmish is running and does nothing otherwise.
+ * It does not switch off, weaken, exclude itself from, or try to get round Windows Defender,
+   SmartScreen, UAC or any other protection. It never will.
+
+WHAT IT DOES - THE COMPLETE LIST
+ 1. Looks for a running copy of one of the two games (process names lotrbfme2.exe / game.dat /
+    lotrbfme2ep1.exe) and checks that its program code is exactly a version it knows.
+ 2. Reads and writes the memory of THAT game process only: your money, timers, camera limit and so
+    on, plus a small page of helper code inside the game (about 4 KB) that lets the game's own
+    update loop call the game's own functions (for example "create this unit for the player" or
+    "select this hero").
+    Windows functions used: OpenProcess, ReadProcessMemory, WriteProcessMemory, VirtualAllocEx,
+    VirtualProtectEx, VirtualQueryEx, FlushInstructionCache, and NtSuspendProcess / NtResumeProcess
+    (the game is held still for a few thousandths of a second while a piece of its code is
+    changed, so that it never runs a half-written instruction). On CLOSE the helper code and
+    every changed value are put back. One thing is left in the running game on purpose: a few
+    bytes that stop the game drawing more than 600 health bars in one picture (the games crash
+    by themselves at about 900, and a large army is still there after the trainer has closed).
+    It lives only in the game's memory and is gone when the game closes.
+ 3. Listens for the hotkeys you chose (F1-F12 or the number pad) and, for Hold to Recruit, for the
+    left mouse button - through the standard Windows low-level keyboard and mouse hooks
+    (SetWindowsHookEx). A key is only looked at while the game (or the trainer) is the window in
+    front, only the keys you assigned are acted on, and nothing that is typed is stored or sent
+    anywhere. The search box on the All Factions page receives the letters you type there in the
+    same way. Hold to Recruit repeats your own left click in the game while you hold the button
+    down (SendInput); it sends no other input.
+ 4. Shows its menu window over the game, and a tray icon.
+ 5. Stores its settings and a plain-text diary of what was switched (session.log) in
+    %APPDATA%\LordOfTheRingsGodModeCheat - or, in the portable copy, in the TrainerData folder next to the
+    program. Delete the folder and they are gone.
+ 6. Only if you tick "Start with Windows": one entry under
+    HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run. Untick it and it is removed.
+ 7. The installer copies the program and these text files to
+    %LOCALAPPDATA%\Programs\LordOfTheRingsGodModeCheat, creates a Start-menu and (if ticked) a
+    desktop shortcut, and registers the normal uninstall entry for your user account
+    (Windows Settings > Apps). It needs no administrator rights and writes nothing outside your
+    own profile. Uninstalling removes all of it, including the settings.
+    If an installation under the old name "Witch-King Trainer" is found, setup replaces it: it
+    removes the old shortcuts, the old entry in the list of apps and the four files it had put
+    into %LOCALAPPDATA%\Programs\WitchKingTrainer. The first start then copies settings.ini from
+    %APPDATA%\WitchKingTrainer; that old folder with its diary is left where it is.
+    One detail of uninstalling, so that it does not surprise you: a program cannot delete its own
+    folder while it is running from it. The uninstaller therefore puts a copy of itself into your
+    temp folder (LordOfTheRingsGodModeCheat-uninstall-<number>.exe), which waits for the uninstaller to end,
+    deletes the program folder and stops. No command window and no script is used. That one temp
+    file may stay behind until Windows next cleans the temp folder; it can be deleted by hand.
+
+WHY IT ASKS FOR ADMINISTRATOR RIGHTS
+ Both games start themselves "as administrator". Windows does not let a normal program read or
+ change the memory of a program that runs as administrator. So the trainer has to run with the same
+ rights as the game - nothing more is behind the prompt. It asks through the normal Windows prompt
+ (UAC), every time, and never tries to avoid or suppress it. If you answer No, the trainer still
+ opens and simply tells you that it cannot reach the game.
+ The installer itself does NOT ask for administrator rights.
+
+WHY AN ANTIVIRUS PROGRAM MAY WARN ABOUT IT - HONESTLY
+ No promise can be made that every antivirus product accepts this program. Trainers are warned
+ about more often than almost any other kind of harmless software, because what they do by design
+ is also what some malware does:
+  * writing into the memory of another program and placing code there (items 1 and 2 above) is
+    reported by many products as "process injection", "memory patcher", "HackTool", "GameHack",
+    "Trainer" or "RiskWare" - names that describe the technique, not harm;
+  * low-level keyboard and mouse hooks (item 3) are what key-loggers use, so behaviour monitors
+    may mention them;
+  * asking for administrator rights raises the weight of everything else;
+  * the installer is a program that unpacks another program, which some products rate as a
+    "dropper", and the uninstaller starts a copy of itself from the temp folder (see item 7),
+    which behaviour monitors may also mention. The portable ZIP contains the same trainer without
+    any installer or uninstaller, for exactly that reason;
+  * it can keep running in the notification area (tray) and, only if you tick it, start with
+    Windows - both are things a monitor may list as "persistence";
+  * the files are not signed with a certificate that Microsoft or the antivirus makers already
+    know. Windows SmartScreen will therefore say "Windows protected your PC / unknown publisher"
+    the first times a downloaded copy is started. That message is about reputation, not about a
+    detected threat.
+ What has been done about it - legitimate practices only:
+  * no packing, no encryption, no obfuscation: the program is ordinary, readable .NET code, and the
+    full source code is published with it for anyone to inspect or to build themselves;
+  * no networking, no hidden files, no self-modifying program files, no scripts, no command shell;
+  * the least privileges that still work: per-user install, administrator rights only for the
+    trainer itself and only because the games require it;
+  * complete version information in the files, a normal uninstall entry, and SHA-256 checksums of
+    every released file (SHA256SUMS.txt) so a copy can be compared with the original;
+  * prepared for code signing (see below).
+ If your antivirus warns: do not switch protection off. Compare the file's SHA-256 with
+ SHA256SUMS.txt, upload it to the vendor's "false positive" page (Microsoft:
+ https://www.microsoft.com/wdsi/filesubmission), or build the program yourself from the source
+ with build.ps1 (it uses only the compiler that is part of Windows). If you are not comfortable
+ with a warning, do not run the program - that is a perfectly reasonable decision.
+
+CODE SIGNING (for a public release)
+ A code-signing certificate cannot be made up: it has to be issued to a real person or company by
+ a certificate authority (or a service such as Azure Trusted Signing), which checks that identity.
+ The project is ready for it:
+  * set InstallInfo.Publisher (src\Shared\InstallInfo.cs) to the name on the certificate;
+  * run   build.ps1 -Release -Sign -CertThumbprint <thumbprint>   (or sign.ps1 afterwards). It
+    signs the trainer first, then builds the installer around the signed trainer and signs the
+    installer too, with SHA-256 and an RFC 3161 time stamp, using Microsoft's signtool;
+  * signtool is part of the free Windows SDK; it is not included and nothing is downloaded
+    automatically.
+ A self-signed certificate does not help: Windows and antivirus products do not trust it. Even
+ with a proper certificate, SmartScreen reputation builds up only as people download the file.
+
+OFFLINE ONLY
+ The trainer is for your own offline skirmishes. Do not use it online; it is built not to work
+ there, and using cheats against other people would be unfair to them.
+
+NOT AFFILIATED
+ A free personal project. Not affiliated with, endorsed by or supported by Electronic Arts,
+ Warner Bros., the Tolkien Estate or the makers of any community patch. The games and their names
+ belong to their owners. No game files are included.

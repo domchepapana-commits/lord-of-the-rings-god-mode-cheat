@@ -1,0 +1,192 @@
+LORD OF THE RINGS GOD MODE CHEAT 1.0  -  MANUAL TESTING GUIDE FOR THE "ALL FACTIONS" PAGE
+
+WHAT HAS BEEN TESTED  (23 Nov 2026, real skirmishes, Men against one Easy opponent)
+ Rise of the Witch-king 2.02 v9.8.0 (Harad Oasis II) and Battle for Middle-earth II 1.06 (Ithilien):
+   tests 1-10 below passed in both games. In detail: a battalion, a hero and the "already in your
+   army" check; all heroes of every faction (36 / 28); a finished building that units walk around
+   and that recruits; another faction's builder building normally; another faction's fortress
+   with its keep; other factions' powers on a Men player (a Balrog summon, one power cast three
+   times in a row with No Ability Cooldowns); back to the own powers and switching again; change
+   faction with builders and fortress; a click while the game is paused; saving and loading;
+   leaving the match and quitting without a crash.
+ Two faults were found in 4.0.0 and are fixed in 4.0.1 (see README.txt, "NEW IN 4.0.1").
+ Rise of the Witch-king 2.02 v9.8.7 (24 Nov 2026, Ring of Isengard, game started from the All in
+   One Launcher): all heroes of every faction (36, level 10 with one key), battalions, buildings,
+   change to Mordor with builders and fortress, Mordor's powers (Balrog, one power three times in
+   a row), back to the own powers, save and load, 60 battalions from one spot side by side.
+ NOT tested: most of the list entries one by one (about a dozen kinds per game were tried),
+   ships, the "Other" group (inns, lairs), ring heroes in battle, long matches, other maps,
+   other starting factions than Men, other patches.
+ So: the page works in a first round of tests. It is not "fully verified" - use the tests below
+ for anything you rely on.
+
+READ THIS FIRST
+ * The ALL FACTIONS page was written by reading the two game programs. An entry that has not
+   been tried yet may still do nothing or, at worst, end the match you are in.
+ * The cheats you already use (CHEATS and SETTINGS pages) are the same as in version 3.1.0. The
+   new page does nothing at all until you press one of its buttons.
+ * No game file, patch, map or save is changed by the trainer. The worst a failed test can do is
+   end the match you are in.
+ * Test in a skirmish you do not mind losing, not in a saved game you care about
+   (see "SAVED GAMES" at the end).
+ * Offline skirmish only, as before.
+
+IF SOMETHING GOES WRONG
+ * The ALL FACTIONS page does nothing until one of its buttons is pressed. If it gives you
+   trouble, simply do not use it - the CHEATS page works without it.
+ * The trainer writes down what it did in  %APPDATA%\LordOfTheRingsGodModeCheat\session.log  (portable copy:
+   TrainerData\session.log next to the program). Lines for this page start with "ALL FACTIONS".
+   If a test fails, that file and the number of the test are all that is needed to find the cause.
+ * A message such as "Not available on this game version" means the trainer compared the game's
+   code with what was analysed, found a difference and did nothing. That is the safety check
+   working, not a crash.
+
+HOW TO OPEN THE PAGE
+ Start the trainer and a skirmish as usual, press F12 in the match, then click  ALL FACTIONS  at
+ the top of the menu. Click  CHEATS  (same place) to go back.
+ The page shows "Your faction: ..." once a match is running; before that its buttons are grey.
+
+Do the tests in this order - each one builds on the one before. Tick what happened.
+Run tests 1-10 once in The Rise of the Witch-king and once in The Battle for Middle-earth II.
+
+-----------------------------------------------------------------------------------------------
+TEST 0  -  NOTHING OLD IS BROKEN  (2 minutes)
+   Do    Use your usual cheats for a minute without opening the new page.
+   Good  Everything behaves as in 3.1.0.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 1  -  ONE UNIT  (the simplest case - if this fails, stop here and send the log)
+   Do    Look at open, flat ground near your base. ALL FACTIONS > click a faction that is NOT
+         yours > Infantry > click one tile (for example "Gondor Soldiers").
+   Good  One battalion appears where the camera is looking, it is yours (your colour, you can
+         select and move it), it fights, and your command points went up by its cost.
+         The line at the bottom of the page says "... 1 created".
+   Bad   Nothing appears / it is neutral or an enemy's / only an empty flag without soldiers /
+         the game freezes or closes.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 2  -  ONE HERO
+   Do    Heroes > click one hero of another faction. Then click the same hero again.
+   Good  The hero appears and is yours; its abilities, level-ups (F9 / LEVEL UP ALL HEROES) and upgrades
+         work as usual. The second click says "already in your army" and creates nothing.
+   Check Let that hero die on purpose. The game should carry on normally. (A hero of another
+         faction cannot be bought back at your fortress - that is expected, see "KNOWN LIMITS".)
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 3  -  RECRUIT ALL HEROES
+   Do    Press  RECRUIT ALL <FACTION> HEROES.  Later, in a fresh match:  RECRUIT ALL HEROES -
+         EVERY FACTION  (30 to 40 heroes - use Unlimited Command Points first).
+   Good  They appear one after the other in rows where the camera looks; heroes you already
+         have are skipped. The counter on the page runs up to the total.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 4  -  ONE BUILDING
+   Do    Look at free, flat ground with room around it. Buildings > click a production building
+         of another faction (for example "Barracks").
+   Good  A finished building stands where the camera was looking (or right beside whatever
+         already stood there - never on top of it). Select it: it shows
+         its own buttons and recruits its faction's units normally (rally point included).
+         Order one of your units to walk THROUGH it: the unit must walk AROUND it.
+   Bad   Units walk through it / it floats above or sinks into the ground / it cannot be
+         selected.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 5  -  BUILDER OF ANOTHER FACTION
+   Do    Builders > click the builder of another faction. Select him and build one of his
+         buildings the normal way.
+   Good  His build menu shows his faction's buildings; the building goes up as in a normal game
+         and then recruits that faction's units.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 6  -  ANOTHER FACTION'S POWERS
+   Do    Choose a faction that is not yours and press  USE THIS FACTION'S POWERS.  Close the
+         trainer menu and look at the game's power bar (left edge of the screen).
+   Good  The page says "<Faction> powers are on your power bar now (All .. powers unlocked)" and
+         "Powers in use: <Faction>". The power bar shows that faction's powers and they are
+         ready. Cast a simple one (a heal, a summon): targeting, effect and summoned units work.
+   Bad   The power bar is empty or still shows your own powers / a power does nothing when cast
+         / the game closes when the power bar is opened or a power is cast.
+   Note  Summons (Balrog, Rohirrim ...) only work on open, flat ground away from your fortress:
+         the red marker must lie flat and whole. On a slope, among trees or beside the fortress
+         the game refuses the cast without a message - with your own faction's summons as well.
+   Note  The game's "buy powers" screen keeps showing your OWN tree. That is expected.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 7  -  POWERS WITH YOUR USUAL CHEATS
+   Do    With another faction's powers in use, switch on Unlimited Power Points and No Ability
+         Cooldowns, and cast the same power several times in a row.
+   Good  It is ready again at once, every time.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 8  -  BACK TO YOUR OWN POWERS
+   Do    Press  Back to my own faction's powers.
+   Good  Your own powers are on the power bar again, the ones you had bought are still there.
+         Then press USE THIS FACTION'S POWERS for the other faction once more: its powers come
+         back immediately. Switch back to your own before you go on.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 9  -  CHANGE TO THIS FACTION
+   Do    Choose another faction, leave "give me two of its builders" ticked, look at free ground
+         and press  CHANGE TO THIS FACTION.
+   Good  Its powers are on your power bar (as in test 6) and two of its builders stand where
+         the camera was looking. With them you build that faction's base; your own army and
+         buildings are untouched and still obey you; enemies and allies are as before.
+   [ ] works   [ ] problem: ....................................................................
+
+TEST 10 -  FORTRESS  (the least certain one - do it last, in a match you can lose)
+   Do    Tick "give me its fortress (at the camera)" as well, look at a large free, flat area
+         (a fortress is about as wide as the whole screen at normal zoom) and press
+         CHANGE TO THIS FACTION - or click the "Fortress" tile under Fortress.
+   Good  The other faction's fortress stands there with its keep, and the keep's buttons work.
+   Bad   Only an empty building plot appears, or nothing. (Then use that faction's builder and
+         build the fortress the normal way - test 5.)
+   [ ] works   [ ] problem: ....................................................................
+
+EXTRA, IF YOU LIKE
+   * Search: click the search box, type a few letters (for example "troll"), press Enter to keep
+     the result, Esc to clear. The letters must NOT reach the game while the box is active.
+   * The "Other" group: inns, shipwrights, creature lairs and their units. Ships only make sense
+     if the camera looks at water.
+   * Pause the game, click a tile: the page should say "Waiting for the game" and create the
+     unit once, not twice, when you resume.
+
+-----------------------------------------------------------------------------------------------
+KNOWN LIMITS  (how the games are built - not faults to report)
+ * New things appear at the point the camera looks at, or at the nearest free place if buildings
+   or troops already stand there. The trainer knows where things stand, but it cannot see
+   cliffs, slopes or water: look at flat ground, especially for buildings.
+ * Only ONE faction's powers can be on the power bar at a time (the games give every player
+   exactly one "spell book"). Switching between factions takes one click and keeps what was
+   unlocked.
+ * The game's own "buy powers" screen and the hero buttons of a fortress always belong to the
+   faction you started the match with. Other factions' powers are therefore unlocked as a whole
+   tree by the trainer, and other factions' heroes are recruited from this page. A hero of
+   another faction that dies cannot be revived at a fortress - recruit him again here.
+ * "Change to this faction" does not turn your existing units into the other faction's units,
+   and it does not tell the game that you ARE the other faction. The games tie too much to
+   that (for example whether your whole army counts as Good or Evil) for it to be done safely
+   without testing. What you get instead is everything the other faction has: its powers, its
+   builders, buildings, units and heroes - while your own army stays exactly as it is.
+ * Build limits (for example "only one of this hero") are not checked for things created here,
+   except that the trainer itself never creates a hero you already have.
+ * Create-a-hero characters, wall pieces, fortress add-ons and creatures that belong to a lair
+   are not offered: the games never create those on their own, so they could not be made safe
+   without testing.
+
+SAVED GAMES
+ * The games do not store which power bar was in use. A loaded game can therefore come up
+   with another faction's power bar - even if you had switched back before saving (seen in the
+   first tests). From 4.0.1 the trainer notices this and puts your own power bar back by itself
+   a few seconds after the load; the page then says "This saved game came back with the ...
+   power bar". Press USE THIS FACTION'S POWERS again if you want the other one.
+ * Without the trainer running, a loaded game may keep the other faction's bar. Start the
+   trainer and it is put right.
+ * A summoned creature that was on the field when you saved may be gone after loading (seen
+   once with a Balrog whose time was nearly up; not looked into further).
+ * Units, heroes and buildings created with this page are ordinary game objects and are saved
+   and loaded like everything else.
+
+WHEN YOU HAVE TESTED
+ If a test fails, please report which test, in which game and on which patch, together with the
+ lines of session.log from that moment. The lists have not been played through entry by entry:
+ treat this page as "tested in a first round", not as "fully tested".

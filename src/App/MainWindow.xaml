@@ -1,0 +1,809 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Lord of the Rings God Mode Cheat" SizeToContent="WidthAndHeight" WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="True"
+        FontFamily="Segoe UI" UseLayoutRounding="True" SnapsToDevicePixels="True">
+  <Window.Resources>
+    <SolidColorBrush x:Key="Gold" Color="#D4AF37"/>
+    <SolidColorBrush x:Key="GoldLight" Color="#F0D98A"/>
+    <SolidColorBrush x:Key="TextMain" Color="#EFE6CF"/>
+    <SolidColorBrush x:Key="TextDim" Color="#A99C7C"/>
+    <SolidColorBrush x:Key="CardBg" Color="#211C15"/>
+    <SolidColorBrush x:Key="CardLine" Color="#3A3020"/>
+    <LinearGradientBrush x:Key="GoldFill" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#F0D98A" Offset="0"/>
+      <GradientStop Color="#B8891C" Offset="1"/>
+    </LinearGradientBrush>
+    <!-- the lettering of the title: gold like the BFME II logo, icy silver like "The Rise of the Witch-king" (colours are set per game in MainWindow.cs) -->
+    <LinearGradientBrush x:Key="TitleFill" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#F0D98B" Offset="0"/>
+      <GradientStop Color="#E0C06B" Offset="0.45"/>
+      <GradientStop Color="#B8891D" Offset="1"/>
+    </LinearGradientBrush>
+
+    <Style x:Key="Card" TargetType="Border">
+      <Setter Property="Background" Value="{StaticResource CardBg}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource CardLine}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CornerRadius" Value="4"/>
+      <Setter Property="Padding" Value="14,7,12,7"/>
+      <Setter Property="Margin" Value="0,0,0,6"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="BorderBrush" Value="#7A6328"/>
+          <Setter Property="Background" Value="#272118"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+    <Style x:Key="CardTitle" TargetType="TextBlock">
+      <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+      <Setter Property="FontSize" Value="14.5"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style x:Key="CardStatus" TargetType="TextBlock">
+      <Setter Property="Foreground" Value="{StaticResource TextDim}"/>
+      <Setter Property="FontSize" Value="11.5"/>
+      <Setter Property="Margin" Value="0,2,0,0"/>
+      <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+    </Style>
+
+    <Style x:Key="Switch" TargetType="ToggleButton">
+      <Setter Property="Width" Value="70"/>
+      <Setter Property="Height" Value="36"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ToggleButton">
+            <Grid Background="Transparent">
+              <Border x:Name="Track" CornerRadius="18" Background="#2A241B" BorderBrush="#4A3F2A" BorderThickness="1"/>
+              <Border x:Name="Glow" CornerRadius="18" Opacity="0" Background="{StaticResource GoldFill}"/>
+              <TextBlock x:Name="OnText" Text="ON" FontSize="10.5" FontWeight="Bold" Foreground="#2A1F08" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="11,0,0,0" Opacity="0"/>
+              <TextBlock x:Name="OffText" Text="OFF" FontSize="10.5" FontWeight="Bold" Foreground="#8C8063" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+              <Ellipse x:Name="Knob" Width="28" Height="28" HorizontalAlignment="Left" Margin="4,0,0,0" Fill="#9A8F76">
+                <Ellipse.RenderTransform>
+                  <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+              </Ellipse>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Knob" Property="Fill" Value="#FFF8E1"/>
+                <Trigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="34" Duration="0:0:0.14"/>
+                      <DoubleAnimation Storyboard.TargetName="Glow" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.14"/>
+                      <DoubleAnimation Storyboard.TargetName="OnText" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.14"/>
+                      <DoubleAnimation Storyboard.TargetName="OffText" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.08"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="0:0:0.14"/>
+                      <DoubleAnimation Storyboard.TargetName="Glow" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.14"/>
+                      <DoubleAnimation Storyboard.TargetName="OnText" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.08"/>
+                      <DoubleAnimation Storyboard.TargetName="OffText" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.14"/>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </Trigger.ExitActions>
+              </Trigger>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Track" Property="BorderBrush" Value="#D4AF37"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="GoldButton" TargetType="Button">
+      <Setter Property="Foreground" Value="#1E1607"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="FontSize" Value="12.5"/>
+      <Setter Property="Padding" Value="16,8"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="B" CornerRadius="3" BorderBrush="#F6E6A8" BorderThickness="1" Background="{StaticResource GoldFill}">
+              <Border CornerRadius="2" Margin="1" BorderBrush="#55000000" BorderThickness="1" Padding="{TemplateBinding Padding}">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-2"/>
+              </Border>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="Opacity" Value="0.87"/></Trigger>
+              <Trigger Property="IsPressed" Value="True"><Setter TargetName="B" Property="Opacity" Value="0.68"/></Trigger>
+              <Trigger Property="IsEnabled" Value="False"><Setter TargetName="B" Property="Opacity" Value="0.4"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="GhostButton" TargetType="Button">
+      <Setter Property="Foreground" Value="{StaticResource GoldLight}"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="FontSize" Value="12.5"/>
+      <Setter Property="Padding" Value="14,8"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="B" CornerRadius="3" BorderBrush="#6B5524" BorderThickness="1" Background="#1A1610">
+              <Border CornerRadius="2" Margin="1" BorderBrush="#3A3020" BorderThickness="1" Padding="{TemplateBinding Padding}">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-2"/>
+              </Border>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="BorderBrush" Value="#D4AF37"/><Setter TargetName="B" Property="Background" Value="#2A2317"/></Trigger>
+              <Trigger Property="IsPressed" Value="True"><Setter TargetName="B" Property="Background" Value="#3A301C"/></Trigger>
+              <Trigger Property="IsEnabled" Value="False"><Setter TargetName="B" Property="Opacity" Value="0.4"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="ChromeButton" TargetType="Button">
+      <Setter Property="Foreground" Value="{StaticResource TextDim}"/>
+      <Setter Property="FontSize" Value="15"/>
+      <Setter Property="Width" Value="46"/>
+      <Setter Property="Height" Value="36"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Margin" Value="4,0,0,0"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="B" CornerRadius="3" Background="#1A1610" BorderBrush="#3A3020" BorderThickness="1">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="Background" Value="#33291A"/><Setter TargetName="B" Property="BorderBrush" Value="#D4AF37"/><Setter Property="Foreground" Value="#FFF3C4"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource ChromeButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="B" CornerRadius="3" Background="#2A1512" BorderBrush="#6E2F28" BorderThickness="1">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="Background" Value="#B8382C"/><Setter TargetName="B" Property="BorderBrush" Value="#F08A7E"/><Setter Property="Foreground" Value="White"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Foreground" Value="#F0B4AC"/>
+      <Setter Property="Width" Value="92"/>
+    </Style>
+
+    <Style x:Key="Pill" TargetType="RadioButton">
+      <Setter Property="Foreground" Value="{StaticResource TextDim}"/>
+      <Setter Property="FontSize" Value="12"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Margin" Value="0,0,6,0"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="RadioButton">
+            <Border x:Name="B" CornerRadius="3" Padding="12,5" Background="#1A1610" BorderBrush="#4A3F2A" BorderThickness="1">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="BorderBrush" Value="#D4AF37"/></Trigger>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="B" Property="Background" Value="{StaticResource GoldFill}"/>
+                <Setter TargetName="B" Property="BorderBrush" Value="#F6E6A8"/>
+                <Setter Property="Foreground" Value="#1E1607"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="SliderFill" TargetType="RepeatButton">
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="IsTabStop" Value="False"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="RepeatButton">
+            <Grid Background="Transparent"><Border Height="6" CornerRadius="3" Background="{StaticResource GoldFill}" VerticalAlignment="Center"/></Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="SliderEmpty" TargetType="RepeatButton">
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="IsTabStop" Value="False"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="RepeatButton"><Grid Background="Transparent"/></ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="SliderThumb" TargetType="Thumb">
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Thumb">
+            <Ellipse Width="24" Height="24" Fill="#FFF8E1" Stroke="#B8891C" StrokeThickness="3"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="GoldSlider" TargetType="Slider">
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Height" Value="30"/>
+      <Setter Property="IsMoveToPointEnabled" Value="True"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Slider">
+            <Grid VerticalAlignment="Center" Background="Transparent">
+              <Border Height="6" CornerRadius="3" Background="#2A241B" BorderBrush="#4A3F2A" BorderThickness="1" VerticalAlignment="Center"/>
+              <Track x:Name="PART_Track" Height="30">
+                <Track.DecreaseRepeatButton><RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderFill}"/></Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton><RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderEmpty}"/></Track.IncreaseRepeatButton>
+                <Track.Thumb><Thumb Style="{StaticResource SliderThumb}"/></Track.Thumb>
+              </Track>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <!-- slim scroll bar in the menu's own colours (lists on the All Factions page) -->
+    <Style TargetType="ScrollBar">
+      <Setter Property="Width" Value="14"/>
+      <Setter Property="MinWidth" Value="14"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ScrollBar">
+            <Border Background="#1A1610" BorderBrush="#3A3020" BorderThickness="1" CornerRadius="3">
+              <Track x:Name="PART_Track" IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton><RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource SliderEmpty}"/></Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton><RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource SliderEmpty}"/></Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                  <Thumb Cursor="Hand" Focusable="False">
+                    <Thumb.Template>
+                      <ControlTemplate TargetType="Thumb"><Border Background="#6B5524" CornerRadius="3" Margin="2"/></ControlTemplate>
+                    </Thumb.Template>
+                  </Thumb>
+                </Track.Thumb>
+              </Track>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <!-- a large tile for one hero / unit / building -->
+    <Style x:Key="Tile" TargetType="Button">
+      <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+      <Setter Property="FontSize" Value="12.5"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Width" Value="184"/>
+      <Setter Property="Height" Value="50"/>
+      <Setter Property="Margin" Value="0,0,6,6"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="B" CornerRadius="3" BorderBrush="#4A3F2A" BorderThickness="1" Background="#1A1610" Padding="9,3,6,3">
+              <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="BorderBrush" Value="#D4AF37"/><Setter TargetName="B" Property="Background" Value="#2A2317"/></Trigger>
+              <Trigger Property="IsPressed" Value="True"><Setter TargetName="B" Property="Background" Value="#3A301C"/></Trigger>
+              <Trigger Property="IsEnabled" Value="False"><Setter TargetName="B" Property="Opacity" Value="0.4"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="Check" TargetType="CheckBox">
+      <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+      <Setter Property="FontSize" Value="12.5"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Margin" Value="0,3,14,3"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="CheckBox">
+            <Grid Background="Transparent">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+              <Border x:Name="Box" Width="22" Height="22" CornerRadius="2" Background="#1A1610" BorderBrush="#6B5524" BorderThickness="1.5" VerticalAlignment="Center">
+                <Path x:Name="Tick" Data="M 4,11 L 9,16 L 18,6" Stroke="#1E1607" StrokeThickness="2.6" Visibility="Collapsed" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+              </Border>
+              <ContentPresenter Grid.Column="1" Margin="9,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Box" Property="Background" Value="{StaticResource GoldFill}"/>
+                <Setter TargetName="Box" Property="BorderBrush" Value="#F6E6A8"/>
+                <Setter TargetName="Tick" Property="Visibility" Value="Visible"/>
+              </Trigger>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Box" Property="BorderBrush" Value="#D4AF37"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="Section" TargetType="TextBlock">
+      <Setter Property="Foreground" Value="#D4AF38"/>
+      <Setter Property="FontFamily" Value="Palatino Linotype"/>
+      <Setter Property="FontSize" Value="11.5"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="Margin" Value="3,1,0,5"/>
+    </Style>
+    <Style x:Key="Key" TargetType="Border">
+      <Setter Property="CornerRadius" Value="2"/>
+      <Setter Property="BorderBrush" Value="#6B5524"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Background" Value="#16120C"/>
+      <Setter Property="Padding" Value="6,0,6,1"/>
+      <Setter Property="Margin" Value="8,1,0,0"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="KeyText" TargetType="TextBlock">
+      <Setter Property="Foreground" Value="{StaticResource GoldLight}"/>
+      <Setter Property="FontSize" Value="10.5"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style x:Key="KeyButton" TargetType="Button" BasedOn="{StaticResource GhostButton}">
+      <Setter Property="Padding" Value="4,5"/>
+      <Setter Property="MinWidth" Value="62"/>
+      <Setter Property="FontSize" Value="12"/>
+    </Style>  </Window.Resources>
+
+  <Grid x:Name="Root" Width="1180" Margin="12">
+    <Grid.LayoutTransform><ScaleTransform x:Name="RootScale" ScaleX="1" ScaleY="1"/></Grid.LayoutTransform>
+    <Border CornerRadius="6" BorderThickness="2" BorderBrush="#6B5525">
+      <Border.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+          <GradientStop Color="#1D1812" Offset="0"/>
+          <GradientStop Color="#15110C" Offset="0.5"/>
+          <GradientStop Color="#110E0A" Offset="1"/>
+        </LinearGradientBrush>
+      </Border.Background>
+      <Border.Effect><DropShadowEffect BlurRadius="16" ShadowDepth="3" Opacity="0.65" Color="Black"/></Border.Effect>
+    </Border>
+    <!-- second, inner line of the frame (the games frame their panels with a double border) -->
+    <Border CornerRadius="3" BorderThickness="1" BorderBrush="#5A4A22" Margin="5" IsHitTestVisible="False"/>
+
+    <Grid Margin="16,10,16,10">
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+
+      <!-- header -->
+      <Grid x:Name="Header" Background="Transparent" Margin="0,0,0,8">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <Image x:Name="AppIcon" Width="38" Height="38" Margin="0,0,12,0" VerticalAlignment="Center"/>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+          <TextBlock x:Name="TitleText" Text="LORD OF THE RINGS&#10;GOD MODE CHEAT" FontFamily="Palatino Linotype" FontSize="15.5" LineHeight="17" LineStackingStrategy="BlockLineHeight" FontWeight="Bold" Foreground="{StaticResource TitleFill}">
+            <TextBlock.Effect><DropShadowEffect BlurRadius="5" ShadowDepth="1" Opacity="0.9" Color="Black"/></TextBlock.Effect>
+          </TextBlock>
+          <TextBlock x:Name="SubtitleText" Text="offline skirmish only" Foreground="{StaticResource TextDim}" FontSize="11" TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,8,0">
+          <Button x:Name="BtnGame" Style="{StaticResource GhostButton}" Padding="10,8" FontSize="12" MinWidth="196" Content="Game  ▾" ToolTip="Choose the game (the trainer also follows whichever game is running)"/>
+          <Button x:Name="BtnPatch" Style="{StaticResource GhostButton}" Padding="10,8" FontSize="12" MinWidth="150" Margin="6,0,0,0" Content="Patch  ▾" ToolTip="Patch / version compatibility"/>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+          <Button x:Name="BtnFactions" Style="{StaticResource ChromeButton}" Width="122" ToolTip="Heroes, units, buildings and powers of every faction; change faction" Content="⚔  ALL FACTIONS" FontSize="12" FontWeight="Bold"/>
+          <Button x:Name="BtnSettings" Style="{StaticResource ChromeButton}" Width="100" ToolTip="Hotkeys, menu size, sounds" Content="⚙  SETTINGS" FontSize="12" FontWeight="Bold"/>
+          <Button x:Name="BtnHide" Style="{StaticResource ChromeButton}" Width="100" ToolTip="Hide this menu and keep playing (cheats stay active)" Content="HIDE  (F12)" FontSize="12" FontWeight="Bold"/>
+          <Button x:Name="BtnClose" Style="{StaticResource CloseButton}" Width="92" ToolTip="Switch all cheats off and close the trainer" Content="✕  CLOSE" FontSize="12" FontWeight="Bold"/>
+        </StackPanel>
+        <!-- ornamental rule under the title bar -->
+        <Border Grid.ColumnSpan="4" Height="1" VerticalAlignment="Bottom" Margin="0,0,0,-5" IsHitTestVisible="False">
+          <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+              <GradientStop Color="#00D4AF39" Offset="0"/>
+              <GradientStop Color="#D4AF39" Offset="0.12"/>
+              <GradientStop Color="#D4AF39" Offset="0.88"/>
+              <GradientStop Color="#00D4AF39" Offset="1"/>
+            </LinearGradientBrush>
+          </Border.Background>
+        </Border>
+      </Grid>
+
+      <!-- status + master -->
+      <Grid Grid.Row="1" Margin="0,0,0,8">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="11"/><ColumnDefinition Width="372"/></Grid.ColumnDefinitions>
+        <Border x:Name="StatusCard" Background="#17130E" BorderBrush="{StaticResource CardLine}" BorderThickness="1" CornerRadius="4" Padding="14,7">
+          <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <Ellipse x:Name="StatusDot" Width="14" Height="14" Fill="#E57368" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Game status:  " Foreground="{StaticResource TextDim}" FontSize="13.5"/>
+                <TextBlock x:Name="StatusText" Text="Game not running" Foreground="{StaticResource TextMain}" FontSize="13.5" FontWeight="SemiBold"/>
+              </StackPanel>
+              <TextBlock x:Name="StatusDetail" Text="Start Rise of the Witch-king and begin a skirmish." Foreground="{StaticResource TextDim}" FontSize="11" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+              <TextBlock x:Name="StatMoney" Text="" Foreground="{StaticResource GoldLight}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+              <TextBlock x:Name="StatCp" Text="" Foreground="{StaticResource TextDim}" FontSize="11" HorizontalAlignment="Right" Margin="0,1,0,0"/>
+            </StackPanel>
+          </Grid>
+        </Border>
+        <Border x:Name="CardMaster" Grid.Column="2" Style="{StaticResource Card}" BorderBrush="#8A6D1F" Background="#2A2214" Margin="0" Padding="14,6,12,6">
+          <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="MASTER CHEATS" FontFamily="Palatino Linotype" FontSize="17" FontWeight="Bold" Foreground="#F0D98C"/>
+              <TextBlock x:Name="StMaster" Text="All cheats on or off together" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwMaster" Grid.Column="1" Style="{StaticResource Switch}">
+              <ToggleButton.LayoutTransform><ScaleTransform ScaleX="1.15" ScaleY="1.15"/></ToggleButton.LayoutTransform>
+            </ToggleButton>
+          </Grid>
+        </Border>
+      </Grid>
+
+      <!-- cheats page -->
+      <Grid x:Name="PageCheats" Grid.Row="2">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="11"/><ColumnDefinition Width="*"/><ColumnDefinition Width="11"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+
+        <!-- column 1 -->
+        <StackPanel>
+          <TextBlock Text="ECONOMY AND CONSTRUCTION" Style="{StaticResource Section}"/>
+          <Border x:Name="CardMoney" Style="{StaticResource Card}"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Unlimited Money" Style="{StaticResource CardTitle}"/><Border x:Name="KeyMoneyBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyMoney" Text="F1" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StMoney" Text="Off" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwMoney" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+          <Border x:Name="CardArmy" Style="{StaticResource Card}"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Instant Army" Style="{StaticResource CardTitle}"/><Border x:Name="KeyArmyBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyArmy" Text="F2" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StArmy" Text="Off" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwArmy" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+          <Border x:Name="CardBuild" Style="{StaticResource Card}"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Instant Construction" Style="{StaticResource CardTitle}"/><Border x:Name="KeyBuildBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyBuild" Text="F3" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StBuild" Text="Off" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwBuild" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+          <Border x:Name="CardUpgrades" Style="{StaticResource Card}"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Instant Upgrades" Style="{StaticResource CardTitle}"/><Border x:Name="KeyUpgradesBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyUpgrades" Text="F3" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StUpgrades" Text="Off" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwUpgrades" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+          <Border x:Name="CardHold" Style="{StaticResource Card}" Cursor="Arrow" Margin="0" Padding="14,6,12,5"><StackPanel>
+            <Grid x:Name="HeadHold" Background="Transparent" Cursor="Hand">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Hold to Recruit" Style="{StaticResource CardTitle}"/>
+                <TextBlock x:Name="StHold" Text="Off" Style="{StaticResource CardStatus}"/>
+              </StackPanel>
+              <ToggleButton x:Name="SwHold" Grid.Column="1" Style="{StaticResource Switch}"/>
+            </Grid>
+            <Grid Margin="0,4,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <TextBlock Text="Repeat speed" Foreground="{StaticResource TextDim}" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,10,0"/>
+              <Slider x:Name="HoldSlider" Grid.Column="1" Style="{StaticResource GoldSlider}" Minimum="2" Maximum="10" Value="6" LargeChange="1" SmallChange="1" VerticalAlignment="Center" Cursor="Hand"/>
+              <TextBlock x:Name="HoldValue" Grid.Column="2" Text="6 / sec" Foreground="{StaticResource GoldLight}" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center" Width="62" TextAlignment="Right"/>
+            </Grid>
+          </StackPanel></Border>
+                  <TextBlock Text="GOD MODE  -  no damage for your own" Style="{StaticResource Section}" Margin="3,7,0,5"/>
+          <Border x:Name="CardGod" Style="{StaticResource Card}" Cursor="Arrow" Margin="0" Padding="8,7,8,6">
+            <Grid>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+              <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="Units" Style="{StaticResource CardTitle}" FontSize="13.5" HorizontalAlignment="Center"/>
+                <ToggleButton x:Name="SwGodU" Style="{StaticResource Switch}" Margin="0,4,0,1"/>
+                <TextBlock x:Name="StGodU" Text="Off" Style="{StaticResource CardStatus}" HorizontalAlignment="Center"/>
+              </StackPanel>
+              <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                <TextBlock Text="Heroes" Style="{StaticResource CardTitle}" FontSize="13.5" HorizontalAlignment="Center"/>
+                <ToggleButton x:Name="SwGodH" Style="{StaticResource Switch}" Margin="0,4,0,1"/>
+                <TextBlock x:Name="StGodH" Text="Off" Style="{StaticResource CardStatus}" HorizontalAlignment="Center"/>
+              </StackPanel>
+              <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                <TextBlock Text="Buildings" Style="{StaticResource CardTitle}" FontSize="13.5" HorizontalAlignment="Center"/>
+                <ToggleButton x:Name="SwGodB" Style="{StaticResource Switch}" Margin="0,4,0,1"/>
+                <TextBlock x:Name="StGodB" Text="Off" Style="{StaticResource CardStatus}" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Grid>
+          </Border>
+        </StackPanel>
+
+        <!-- column 2 -->
+        <StackPanel Grid.Column="2">
+          <TextBlock Text="ARMY AND HEROES" Style="{StaticResource Section}"/>
+          <Border x:Name="CardCp" Style="{StaticResource Card}" Cursor="Arrow"><StackPanel>
+            <Grid x:Name="HeadCp" Background="Transparent" Cursor="Hand">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <StackPanel VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal"><TextBlock Text="Unlimited Command Points" Style="{StaticResource CardTitle}"/><Border x:Name="KeyCpBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyCp" Text="F4" Style="{StaticResource KeyText}"/></Border></StackPanel>
+                <TextBlock x:Name="StCp" Text="Off" Style="{StaticResource CardStatus}"/>
+              </StackPanel>
+              <ToggleButton x:Name="SwCp" Grid.Column="1" Style="{StaticResource Switch}"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,1">
+              <TextBlock Text="Limit" Foreground="{StaticResource TextDim}" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,8,0"/>
+              <RadioButton x:Name="Cp1000" GroupName="Cp" Style="{StaticResource Pill}" Content="1,000"/>
+              <RadioButton x:Name="Cp5000" GroupName="Cp" Style="{StaticResource Pill}" Content="5,000"/>
+              <RadioButton x:Name="Cp10000" GroupName="Cp" Style="{StaticResource Pill}" Content="10,000"/>
+              <RadioButton x:Name="Cp99999" GroupName="Cp" Style="{StaticResource Pill}" Content="No limit" Margin="0"/>
+            </StackPanel>
+          </StackPanel></Border>
+          <Border x:Name="CardHero" Style="{StaticResource Card}" Cursor="Arrow"><StackPanel>
+            <StackPanel Orientation="Horizontal"><TextBlock Text="Instant Hero Level Up" Style="{StaticResource CardTitle}"/><Border x:Name="KeyHeroBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyHero" Text="F9" Style="{StaticResource KeyText}"/></Border></StackPanel>
+            <TextBlock x:Name="StHero" Text="All your heroes go to their highest level at once." Style="{StaticResource CardStatus}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,6,0,1">
+              <Button x:Name="BtnLevelAll" Style="{StaticResource GoldButton}" Content="LEVEL UP ALL HEROES" Padding="12,7" FontSize="12" ToolTip="Every hero you have on the map goes to the highest level - no need to select anyone"/>
+              <Button x:Name="BtnMyHeroes" Style="{StaticResource GhostButton}" Content="MY HEROES  ▸" Padding="12,7" FontSize="12" Margin="8,0,0,0" ToolTip="A list of all your heroes - also those the game's own hero bar has no room for. Click one to select him and go to him."/>
+            </StackPanel>
+          </StackPanel></Border>
+          <Border x:Name="CardFreeze" Style="{StaticResource Card}"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Freeze Enemy AI" Style="{StaticResource CardTitle}"/><Border x:Name="KeyFreezeBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyFreeze" Text="F11" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StFreeze" Text="Off" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwFreeze" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+          <TextBlock Text="POWERS AND ABILITIES" Style="{StaticResource Section}" Margin="3,5,0,5"/>
+          <Border x:Name="CardPower" Style="{StaticResource Card}" Cursor="Arrow"><StackPanel>
+            <Grid x:Name="HeadPower" Background="Transparent" Cursor="Hand">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <StackPanel VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal"><TextBlock Text="Unlimited Power Points" Style="{StaticResource CardTitle}"/><Border x:Name="KeyPowerBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyPower" Text="F8" Style="{StaticResource KeyText}"/></Border></StackPanel>
+                <TextBlock x:Name="StPower" Text="Off" Style="{StaticResource CardStatus}"/>
+              </StackPanel>
+              <ToggleButton x:Name="SwPower" Grid.Column="1" Style="{StaticResource Switch}"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Margin="0,6,0,1">
+              <Button x:Name="BtnUnlock" Style="{StaticResource GoldButton}" Content="UNLOCK ALL POWERS" Padding="12,7" FontSize="12"/>
+              <TextBlock x:Name="StUnlock" Text="" Foreground="{StaticResource TextDim}" FontSize="11" VerticalAlignment="Center" Margin="10,0,0,0" TextTrimming="CharacterEllipsis" MaxWidth="170"/>
+            </StackPanel>
+          </StackPanel></Border>
+          <Border x:Name="CardCooldown" Style="{StaticResource Card}" Margin="0"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="No Ability Cooldowns" Style="{StaticResource CardTitle}"/><Border x:Name="KeyCooldownBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyCooldown" Text="F10" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StCooldown" Text="Off" Style="{StaticResource CardStatus}"/>
+              <TextBlock Text="Fortress abilities, faction powers and hero abilities" Foreground="#7E7358" FontSize="10.5" Margin="0,1,0,0"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwCooldown" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+        </StackPanel>
+
+        <!-- column 3 -->
+        <StackPanel Grid.Column="4">
+          <TextBlock Text="MAP AND CAMERA" Style="{StaticResource Section}"/>
+          <Border x:Name="CardReveal" Style="{StaticResource Card}"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Reveal Entire Map" Style="{StaticResource CardTitle}"/><Border x:Name="KeyRevealBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyReveal" Text="F5" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StReveal" Text="Off" Style="{StaticResource CardStatus}"/>
+            </StackPanel>
+            <ToggleButton x:Name="SwReveal" Grid.Column="1" Style="{StaticResource Switch}"/>
+          </Grid></Border>
+          <Border x:Name="CardGollum" Style="{StaticResource Card}" Cursor="Arrow"><Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+              <StackPanel Orientation="Horizontal"><TextBlock Text="Gollum Tracking" Style="{StaticResource CardTitle}"/><Border x:Name="KeyTrackBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyTrack" Text="F7" Style="{StaticResource KeyText}"/></Border></StackPanel>
+              <TextBlock x:Name="StTrack" Text="Off" Style="{StaticResource CardStatus}"/>
+              <TextBlock x:Name="StGollum" Text="Switch on to keep Gollum marked on the minimap." Foreground="{StaticResource TextDim}" FontSize="11" Margin="0,3,0,0" TextWrapping="Wrap" MinHeight="30" MaxHeight="30"/>
+              <StackPanel Orientation="Horizontal" Margin="0,6,0,1">
+                <Button x:Name="BtnFind" Style="{StaticResource GoldButton}" Content="FIND GOLLUM" Padding="9,7" FontSize="11" ToolTip="Switch tracking on and mark Gollum on the minimap"/>
+                <Button x:Name="BtnGoto" Style="{StaticResource GhostButton}" Content="GO TO GOLLUM" Padding="9,7" FontSize="11" Margin="6,0,0,0" ToolTip="Move the game camera to Gollum"/>
+              </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+              <ToggleButton x:Name="SwTrack" Style="{StaticResource Switch}" HorizontalAlignment="Right"/>
+              <Border Width="106" Height="78" Margin="0,7,0,0" CornerRadius="3" BorderBrush="#6B5524" BorderThickness="1" ToolTip="Gollum's position on the map (north is up)">
+                <Border.Background>
+                  <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#3A3122" Offset="0"/><GradientStop Color="#2A2317" Offset="1"/></LinearGradientBrush>
+                </Border.Background>
+                <Canvas x:Name="MapCanvas" Width="104" Height="76" ClipToBounds="True">
+                  <TextBlock x:Name="MapHint" Text="map" Foreground="#6E6249" FontSize="11" Canvas.Left="40" Canvas.Top="29"/>
+                  <Ellipse x:Name="MapRing" Width="26" Height="26" Stroke="#F0D98A" StrokeThickness="1.5" Opacity="0.55" Visibility="Collapsed"/>
+                  <Ellipse x:Name="MapDot" Width="10" Height="10" Fill="#FFD54A" Stroke="#3A2A00" StrokeThickness="1" Visibility="Collapsed"/>
+                </Canvas>
+              </Border>
+            </StackPanel>
+          </Grid></Border>
+          <Border x:Name="CardZoom" Style="{StaticResource Card}" Cursor="Arrow"><StackPanel>
+            <Grid x:Name="HeadZoom" Background="Transparent" Cursor="Hand">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <StackPanel VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal"><TextBlock Text="Extended Zoom" Style="{StaticResource CardTitle}"/><Border x:Name="KeyZoomBox" Style="{StaticResource Key}"><TextBlock x:Name="KeyZoom" Text="F6" Style="{StaticResource KeyText}"/></Border></StackPanel>
+                <TextBlock x:Name="StZoom" Text="Off" Style="{StaticResource CardStatus}"/>
+              </StackPanel>
+              <ToggleButton x:Name="SwZoom" Grid.Column="1" Style="{StaticResource Switch}"/>
+            </Grid>
+            <Grid Margin="0,4,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <TextBlock Text="Zoom-out" Foreground="{StaticResource TextDim}" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,10,0"/>
+              <Slider x:Name="ZoomSlider" Grid.Column="1" Style="{StaticResource GoldSlider}" Minimum="1" Maximum="3" Value="1.6" LargeChange="0.1" SmallChange="0.1" VerticalAlignment="Center" Cursor="Hand"/>
+              <TextBlock x:Name="ZoomValue" Grid.Column="2" Text="1.6×" Foreground="{StaticResource GoldLight}" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Width="40" TextAlignment="Right" Margin="4,0,8,0"/>
+              <Button x:Name="BtnZoomDefault" Grid.Column="3" Style="{StaticResource GhostButton}" Content="Default" Padding="9,5" FontSize="11" ToolTip="Switch extended zoom off and return to the map's normal camera limit"/>
+            </Grid>
+          </StackPanel></Border>
+                  <TextBlock Text="WEATHER  -  visual only" Style="{StaticResource Section}" Margin="3,7,0,5"/>
+          <Border x:Name="CardWeather" Style="{StaticResource Card}" Cursor="Arrow">
+            <StackPanel>
+              <WrapPanel>
+                <RadioButton x:Name="Wx1" GroupName="Wx" Style="{StaticResource Pill}" Content="Clear"/>
+                <RadioButton x:Name="Wx2" GroupName="Wx" Style="{StaticResource Pill}" Content="Rain"/>
+                <RadioButton x:Name="Wx3" GroupName="Wx" Style="{StaticResource Pill}" Content="Snow"/>
+                <RadioButton x:Name="Wx4" GroupName="Wx" Style="{StaticResource Pill}" Content="Fog"/>
+                <RadioButton x:Name="Wx5" GroupName="Wx" Style="{StaticResource Pill}" Content="Storm" Margin="0"/>
+              </WrapPanel>
+              <Grid Margin="0,7,0,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock x:Name="StWeather" Text="Map default" Style="{StaticResource CardStatus}" VerticalAlignment="Center"/>
+                <Button x:Name="BtnWeatherDefault" Grid.Column="1" Style="{StaticResource GhostButton}" Content="Restore default weather" Padding="9,5" FontSize="11" ToolTip="Put the map's own weather back"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+
+      <!-- settings page -->
+      <Grid x:Name="PageSettings" Grid.Row="2" Visibility="Collapsed">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="11"/><ColumnDefinition Width="372"/></Grid.ColumnDefinitions>
+        <StackPanel>
+          <TextBlock Text="HOTKEYS  -  click a key to change it" Style="{StaticResource Section}"/>
+          <Border Style="{StaticResource Card}" Cursor="Arrow">
+            <StackPanel>
+              <UniformGrid x:Name="HotkeyGrid" Columns="2"/>
+              <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <CheckBox x:Name="ChkHotkeys" Style="{StaticResource Check}" Content="Hotkeys enabled (only while the game is the active window)"/>
+                <Button x:Name="BtnResetKeys" Grid.Column="1" Style="{StaticResource GhostButton}" Content="Restore default keys" Padding="10,6" FontSize="11.5"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+          <TextBlock TextWrapping="Wrap" Foreground="{StaticResource TextDim}" FontSize="11" Margin="4,2,4,0"
+                     Text="Keys work without Ctrl, Alt or Shift, and only while the game is in front. Function keys and the number-pad keys can be assigned. While a key is assigned here the game's own use of it is replaced in-game (F1–F8 recall saved camera views, F9 hides the interface, F12 takes a screenshot; Ctrl+F1–F8 is not affected). Set a key to None to give it back to the game."/>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+          <TextBlock Text="MENU AND SOUND" Style="{StaticResource Section}"/>
+          <Border Style="{StaticResource Card}" Cursor="Arrow">
+            <StackPanel>
+              <TextBlock Text="Menu size over the game" Foreground="{StaticResource TextMain}" FontSize="12.5"/>
+              <Grid Margin="0,2,0,6">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <Slider x:Name="OverlaySlider" Style="{StaticResource GoldSlider}" Minimum="55" Maximum="100" Value="90" LargeChange="5" SmallChange="5" VerticalAlignment="Center" Cursor="Hand"/>
+                <TextBlock x:Name="OverlayValue" Grid.Column="1" Text="90%" Foreground="{StaticResource GoldLight}" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center" Width="46" TextAlignment="Right"/>
+              </Grid>
+              <CheckBox x:Name="ChkSounds" Style="{StaticResource Check}" Content="Sound cues when a cheat switches"/>
+              <CheckBox x:Name="ChkTopmost" Style="{StaticResource Check}" Content="Keep on top when used on the desktop"/>
+              <CheckBox x:Name="ChkStartup" Style="{StaticResource Check}" Content="Start with Windows (in the tray)"/>
+            </StackPanel>
+          </Border>
+          <TextBlock TextWrapping="Wrap" Foreground="{StaticResource TextDim}" FontSize="11" Margin="4,2,4,0"
+                     Text="In the game, F12 opens this menu on top of the match without leaving it; the match keeps running and the mouse works in both. Press F12 again, or HIDE, to continue playing."/>
+        </StackPanel>
+      </Grid>
+
+      <!-- all factions page -->
+      <Grid x:Name="PageFactions" Grid.Row="2" Visibility="Collapsed">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="318"/><ColumnDefinition Width="11"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <StackPanel>
+          <TextBlock Text="1  -  CHOOSE A FACTION" Style="{StaticResource Section}"/>
+          <Border Style="{StaticResource Card}" Cursor="Arrow" Padding="10,8,6,2">
+            <WrapPanel x:Name="FacList"/>
+          </Border>
+          <TextBlock Text="CHANGE FACTION  -  POWERS OF EVERY FACTION" Style="{StaticResource Section}" Margin="3,5,0,5"/>
+          <Border Style="{StaticResource Card}" Cursor="Arrow">
+            <StackPanel>
+              <TextBlock x:Name="FacNow" Text="Start a skirmish first." Foreground="{StaticResource TextMain}" FontSize="12.5" FontWeight="SemiBold" TextWrapping="Wrap"/>
+              <Button x:Name="BtnFacPowers" Style="{StaticResource GoldButton}" Content="USE THIS FACTION'S POWERS" Margin="0,7,0,0" Padding="10,9"
+                      ToolTip="Puts this faction's powers on your power bar in the game and unlocks its whole power tree. Powers of other trees stay yours and come back when you switch again."/>
+              <Button x:Name="BtnFacChange" Style="{StaticResource GoldButton}" Content="CHANGE TO THIS FACTION" Margin="0,6,0,0" Padding="10,9"
+                      ToolTip="This faction's powers on your power bar, plus what is ticked below: its builders build all its buildings, and those recruit all its units. Your army and buildings stay yours."/>
+              <CheckBox x:Name="ChkFacBuilders" Style="{StaticResource Check}" Content="give me two of its builders" Margin="2,7,0,1" IsChecked="True"/>
+              <CheckBox x:Name="ChkFacFortress" Style="{StaticResource Check}" Content="give me its fortress (at the camera)" Margin="2,1,0,3"/>
+              <Button x:Name="BtnFacRestore" Style="{StaticResource GhostButton}" Content="Back to my own faction's powers" Margin="0,5,0,0" Padding="10,7" FontSize="12"
+                      ToolTip="Puts your own faction's powers back on the power bar. Everything you built or recruited stays. Do this before you save a game."/>
+              <TextBlock x:Name="StFaction" Text="" Style="{StaticResource CardStatus}" TextWrapping="Wrap" TextTrimming="None" Margin="0,6,0,0"/>
+            </StackPanel>
+          </Border>
+          <Border CornerRadius="4" BorderThickness="1" BorderBrush="#7A6328" Background="#2A2214" Padding="10,6" Margin="0,0,0,0">
+            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextMain}"
+                       Text="NEW PAGE. First skirmish tests passed in both games, but not every entry of the lists has been tried. Summons need open, flat ground away from your fortress."/>
+          </Border>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+          <TextBlock Text="2  -  HEROES, UNITS AND BUILDINGS OF EVERY FACTION   (click one: it appears where your camera is looking - pick free, flat ground)" Style="{StaticResource Section}"/>
+          <Border Style="{StaticResource Card}" Cursor="Arrow" Padding="12,8,8,8">
+            <StackPanel>
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <WrapPanel x:Name="FacCats" VerticalAlignment="Center"/>
+                <Border x:Name="FacSearchBox" Grid.Column="1" Width="214" Height="30" CornerRadius="3" Background="#1A1610" BorderBrush="#6B5524" BorderThickness="1" Cursor="IBeam" Margin="6,0,4,0"
+                        ToolTip="Click here, then type a name. Esc clears it.">
+                  <TextBlock x:Name="FacSearchText" Text="🔍  Search all factions" Foreground="{StaticResource TextDim}" FontSize="12" VerticalAlignment="Center" Margin="9,0,6,0" TextTrimming="CharacterEllipsis"/>
+                </Border>
+              </Grid>
+              <ScrollViewer x:Name="FacScroll" Height="372" Margin="0,8,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                <WrapPanel x:Name="FacItems"/>
+              </ScrollViewer>
+              <Grid Margin="0,8,4,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Button x:Name="BtnHeroesFaction" Style="{StaticResource GoldButton}" Content="RECRUIT ALL HEROES OF THIS FACTION" Padding="12,9" FontSize="12"/>
+                <Button x:Name="BtnHeroesAll" Grid.Column="1" Style="{StaticResource GhostButton}" Content="RECRUIT ALL HEROES - EVERY FACTION" Padding="12,9" FontSize="12" Margin="8,0,0,0"/>
+                <TextBlock x:Name="StSpawn" Grid.Column="2" Text="" Style="{StaticResource CardStatus}" TextWrapping="Wrap" TextTrimming="None" VerticalAlignment="Center" Margin="12,0,0,0"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+
+      <!-- my heroes page -->
+      <Grid x:Name="PageHeroes" Grid.Row="2" Visibility="Collapsed">
+        <StackPanel>
+          <TextBlock Text="MY HEROES   (click a hero: the game selects that hero, the camera goes there and this menu closes)" Style="{StaticResource Section}"/>
+          <Border Style="{StaticResource Card}" Cursor="Arrow" Padding="12,8,8,8">
+            <StackPanel>
+              <TextBlock x:Name="HeroListInfo" Text="Start a skirmish first - then your heroes are listed here." Foreground="{StaticResource TextMain}" FontSize="12.5" FontWeight="SemiBold" TextWrapping="Wrap"/>
+              <ScrollViewer x:Name="HeroScroll" Height="400" Margin="0,8,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                <WrapPanel x:Name="HeroItems"/>
+              </ScrollViewer>
+              <Grid Margin="0,8,4,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Button x:Name="BtnHeroesBack" Style="{StaticResource GhostButton}" Content="◀  BACK TO CHEATS" Padding="12,9" FontSize="12"/>
+                <Button x:Name="BtnHeroesLevel" Grid.Column="1" Style="{StaticResource GoldButton}" Content="LEVEL UP ALL HEROES" Padding="12,9" FontSize="12" Margin="8,0,0,0"/>
+                <TextBlock x:Name="StHeroList" Grid.Column="2" Text="" Style="{StaticResource CardStatus}" TextWrapping="Wrap" TextTrimming="None" VerticalAlignment="Center" Margin="12,0,0,0"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+
+      <!-- footer -->
+      <Grid Grid.Row="3" Margin="2,8,2,0">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <TextBlock x:Name="EventText" Text="Ready." Foreground="{StaticResource TextDim}" FontSize="11.5" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+        <TextBlock x:Name="HotkeyHint" Grid.Column="1" Text="F12 shows / hides this menu" Foreground="#6E6249" FontSize="11" VerticalAlignment="Center" Margin="12,0,0,0"/>
+      </Grid>
+
+      <Popup x:Name="KeyPopup" StaysOpen="False" AllowsTransparency="True" Placement="Bottom">
+        <Border x:Name="KeyPopupBorder" Background="#211C15" BorderBrush="#D4AF37" BorderThickness="1" CornerRadius="4" Padding="8">
+          <WrapPanel x:Name="KeyPopupPanel" Width="420"/>
+        </Border>
+      </Popup>
+      <Popup x:Name="GamePopup" StaysOpen="False" AllowsTransparency="True" Placement="Bottom">
+        <Border x:Name="GamePopupBorder" Background="#211C15" BorderBrush="#D4AF37" BorderThickness="1" CornerRadius="4" Padding="6">
+          <StackPanel x:Name="GamePopupPanel" Width="300"/>
+        </Border>
+      </Popup>
+      <Popup x:Name="PatchPopup" StaysOpen="False" AllowsTransparency="True" Placement="Bottom">
+        <Border x:Name="PatchPopupBorder" Background="#211C15" BorderBrush="#D4AF37" BorderThickness="1" CornerRadius="4" Padding="6">
+          <StackPanel x:Name="PatchPopupPanel" Width="470"/>
+        </Border>
+      </Popup>
+    </Grid>
+  </Grid>
+</Window>
