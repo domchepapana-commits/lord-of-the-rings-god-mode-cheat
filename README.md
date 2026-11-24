@@ -15,9 +15,6 @@
 
 *Offline single-player only.*
 
-
-# Lord of the Rings God Mode Cheat
-
 An offline skirmish trainer for two classic strategy games:
 
 - **The Lord of the Rings: The Battle for Middle-earth II** (Patch 1.06)
